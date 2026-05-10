@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Новое событие{% endblock %}
+{% block content %}
+<div class="card">
+  <h1 style="margin-top:0;">Новое событие</h1>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <p class="muted" style="margin-bottom:1rem;">
+    В полях <strong>Начало</strong> и <strong>Конец</strong> нужно выбрать <strong>и дату, и время</strong>.
+    Если время показывается как <code style="background:#334155;padding:2px 6px;border-radius:4px;">--:--</code>, браузер не даёт сохранить — открой часы рядом с датой и выбери, например, 15:00.
+  </p>
+  <form method="post" action="/events/new">
+    <label>Название <input name="title" required maxlength="256" placeholder="Урок / домашка" /></label>
+    <label>Начало <input name="starts_at" type="datetime-local" step="60" required /></label>
+    <label>Конец <input name="ends_at" type="datetime-local" step="60" required /></label>
+    <label>Заметка (необязательно) <textarea name="note" rows="3" maxlength="2000"></textarea></label>
+    <label style="margin-top:1rem;"><button class="btn btn-primary" type="submit">Сохранить</button></label>
+  </form>
+  <p class="muted"><a href="/day" style="color:var(--accent);">← Назад</a></p>
+</div>
+{% endblock %}

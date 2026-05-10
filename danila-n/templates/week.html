@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Неделя{% endblock %}
+{% block content %}
+<h1 style="margin-top:0;">Неделя: {{ monday.isoformat() }} — {{ sunday.isoformat() }}</h1>
+<div class="row-nav">
+  <a class="btn btn-ghost" href="/week?w={{ prev_week_anchor.isoformat() }}">← Прошлая</a>
+  <a class="btn btn-ghost" href="/week">Текущая</a>
+  <a class="btn btn-ghost" href="/week?w={{ next_week_anchor.isoformat() }}">Следующая →</a>
+</div>
+<div class="card">
+  <h2 style="margin-top:0;">События</h2>
+  {% if not events %}
+    <p class="muted">На этой неделе пока ничего.</p>
+  {% else %}
+    <ul class="events">
+      {% for e in events %}
+      <li>
+        <div>
+          <strong>{{ e.title }}</strong><br />
+          <span class="muted">{{ e.starts_at.strftime('%a %d.%m') }} {{ e.starts_at.strftime('%H:%M') }} — {{ e.ends_at.strftime('%H:%M') }}</span>
+          {% if e.note %}<br /><span class="muted">{{ e.note }}</span>{% endif %}
+        </div>
+        <form method="post" action="/events/{{ e.id }}/delete" onsubmit="return confirm('Удалить?');">
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

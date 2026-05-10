@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}День — расписание{% endblock %}
+{% block content %}
+<h1 style="margin-top:0;">День: {{ chosen.isoformat() }}</h1>
+<div class="row-nav">
+  <a class="btn btn-ghost" href="/day?d={{ prev.isoformat() }}">← Вчера</a>
+  <a class="btn btn-ghost" href="/day">Сегодня</a>
+  <a class="btn btn-ghost" href="/day?d={{ next.isoformat() }}">Завтра →</a>
+</div>
+<div class="card">
+  <h2 style="margin-top:0;">События</h2>
+  {% if not events %}
+    <p class="muted">Пусто. <a href="/events/new" style="color:var(--accent);">Добавить</a></p>
+  {% else %}
+    <ul class="events">
+      {% for e in events %}
+      <li>
+        <div>
+          <strong>{{ e.title }}</strong><br />
+          <span class="muted">{{ e.starts_at.strftime('%H:%M') }} — {{ e.ends_at.strftime('%H:%M') }}</span>
+          {% if e.note %}<br /><span class="muted">{{ e.note }}</span>{% endif %}
+        </div>
+        <form method="post" action="/events/{{ e.id }}/delete" onsubmit="return confirm('Удалить событие?');">
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}
