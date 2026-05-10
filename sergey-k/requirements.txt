@@ -1,0 +1,13 @@
+# Проект Kiber One: рисунки через модуль turtle (входит в стандартную библиотеку Python).
+# Отдельно ставить «turtle» через pip не нужно.
+#
+# Ошибка: ModuleNotFoundError: No module named '_tkinter'
+# — ваш Python собран без Tcl/Tk (часто так бывает у pyenv). Это не лечится пакетом из PyPI.
+# Запуск с системным Python на macOS (обычно с Tk):
+#   /usr/bin/python3 examples/01_rainbow_spiral.py
+#
+# Альтернатива: переустановка Python через pyenv с поддержкой Tk после `brew install tcl-tk`
+# https://github.com/pyenv/pyenv/wiki/Common-build-problems#tcltk-support
+#
+# Техническая зависимость для стабильного pip (на случай пустого списка пакетов в venv):
+packaging>=23.0
